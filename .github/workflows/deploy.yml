@@ -33,10 +33,24 @@ jobs:
       - name: Build
         run: npm run build:gh
 
+      - name: Resolve build output
+        id: build_path
+        run: |
+          if [ -f dist/angular-calc/index.html ]; then
+            echo "path=dist/angular-calc" >> "$GITHUB_OUTPUT"
+          elif [ -f dist/angular-calc/browser/index.html ]; then
+            echo "path=dist/angular-calc/browser" >> "$GITHUB_OUTPUT"
+          else
+            echo "No index.html found in dist output."
+            ls -la dist || true
+            ls -la dist/angular-calc || true
+            exit 1
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/angular-calc
+          path: ${{ steps.build_path.outputs.path }}
 
   deploy:
     needs: build
