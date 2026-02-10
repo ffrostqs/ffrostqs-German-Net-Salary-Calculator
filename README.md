@@ -1,5 +1,7 @@
 # German Net Salary Calculator (Angular)
 
+[![Deploy](https://github.com/ffrostqs/ffrostqs-German-Net-Salary-Calculator/actions/workflows/deploy.yml/badge.svg)](https://github.com/ffrostqs/ffrostqs-German-Net-Salary-Calculator/actions/workflows/deploy.yml)
+
 A static, offline-first German net salary calculator built with Angular 17+ (Angular 19 here), Signals, RxJS, and Chart.js. The app loads tax parameters from `src/assets/data/tax-config.json`, performs calculations in the browser, and supports an optional Live API mode. A GitHub Action updates tax parameters weekly.
 
 ## Highlights
@@ -104,22 +106,21 @@ npm run build
 
 ## GitHub Pages Deployment
 
-1. Set your repository name (for base-href):
+### Auto deploy (recommended)
+
+This repo includes a workflow that builds and publishes on each push to `main`.
+To trigger manually: Actions → “Deploy to GitHub Pages”.
+
+Output URL:
+`https://ffrostqs.github.io/ffrostqs-German-Net-Salary-Calculator/`
+
+In GitHub → Settings → Pages, set Source to **GitHub Actions**.
+
+### Manual deploy (local)
 
 ```bash
-npm run build:gh
-```
-
-2. Deploy `dist/angular-calc` to the `gh-pages` branch.
-
-Example (manual):
-
-```bash
-git checkout --orphan gh-pages
-cp -R dist/angular-calc/* .
-git add .
-git commit -m "Deploy"
-git push origin gh-pages --force
+ng build --base-href=/ffrostqs-German-Net-Salary-Calculator/
+./deploy
 ```
 
 Then enable GitHub Pages on the `gh-pages` branch in repository settings.

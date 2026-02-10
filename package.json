@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:gh": "ng build --base-href=/${npm_package_name}/",
+    "deploy": "ng build --base-href=/ffrostqs-German-Net-Salary-Calculator/ && ./deploy",
+    "build:gh": "ng build --base-href=/ffrostqs-German-Net-Salary-Calculator/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

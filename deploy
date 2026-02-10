@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIST_DIR="$ROOT_DIR/dist/angular-calc"
+BRANCH="gh-pages"
+
+if [ ! -d "$DIST_DIR" ]; then
+  echo "Build output not found at $DIST_DIR. Run the build first."
+  exit 1
+fi
+
+tmp_dir="$(mktemp -d)"
+
+cleanup() {
+  git -C "$ROOT_DIR" worktree remove "$tmp_dir" --force >/dev/null 2>&1 || true
+  rm -rf "$tmp_dir"
+}
+trap cleanup EXIT
+
+if git -C "$ROOT_DIR" show-ref --verify --quiet "refs/heads/$BRANCH"; then
+  git -C "$ROOT_DIR" worktree add "$tmp_dir" "$BRANCH"
+else
+  git -C "$ROOT_DIR" worktree add -b "$BRANCH" "$tmp_dir"
+fi
+
+rsync -a --delete "$DIST_DIR/" "$tmp_dir/"
+
+if [ -f "$tmp_dir/.nojekyll" ]; then
+  :
+else
+  touch "$tmp_dir/.nojekyll"
+fi
+
+git -C "$tmp_dir" add -A
+if git -C "$tmp_dir" diff --cached --quiet; then
+  echo "No changes to deploy."
+  exit 0
+fi
+
+git -C "$tmp_dir" commit -m "Deploy"
+
+git -C "$tmp_dir" push origin "$BRANCH"
