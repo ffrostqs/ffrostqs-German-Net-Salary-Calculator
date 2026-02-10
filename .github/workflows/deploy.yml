@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: ng build --base-href=/ffrostqs-German-Net-Salary-Calculator/
+        run: npm run build:gh
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
