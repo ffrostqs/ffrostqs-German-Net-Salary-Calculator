@@ -1,0 +1,56 @@
+{
+  "year": 2026,
+  "lastUpdated": "2026-02-10",
+  "taxClasses": {
+    "1": { "factor": 1.0 },
+    "2": { "factor": 0.95 },
+    "3": { "factor": 0.7 },
+    "4": { "factor": 1.0 },
+    "5": { "factor": 1.15 },
+    "6": { "factor": 1.25 }
+  },
+  "limits": {
+    "minijob": 556,
+    "midijob": 2000,
+    "midijobEmployeeFactor": 0.55
+  },
+  "allowances": {
+    "basicAllowance": 12000,
+    "childAllowance": 9000
+  },
+  "taxBrackets": [
+    { "upTo": 12000, "rate": 0.0 },
+    { "upTo": 20000, "rate": 0.14 },
+    { "upTo": 40000, "rate": 0.24 },
+    { "upTo": 80000, "rate": 0.35 },
+    { "upTo": 200000, "rate": 0.42 },
+    { "upTo": null, "rate": 0.45 }
+  ],
+  "insuranceRates": {
+    "health": 0.146,
+    "healthAdditional": 0.013,
+    "pension": 0.186,
+    "unemployment": 0.026,
+    "nursing": 0.034
+  },
+  "solidarityRate": 0.055,
+  "solidarityThreshold": 16000,
+  "churchTaxRateByState": {
+    "BW": 0.08,
+    "BY": 0.08,
+    "BE": 0.09,
+    "BB": 0.09,
+    "HB": 0.09,
+    "HH": 0.09,
+    "HE": 0.09,
+    "MV": 0.09,
+    "NI": 0.09,
+    "NW": 0.09,
+    "RP": 0.09,
+    "SL": 0.09,
+    "SN": 0.09,
+    "ST": 0.09,
+    "SH": 0.09,
+    "TH": 0.09
+  }
+}
