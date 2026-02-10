@@ -1,0 +1,94 @@
+<div class="panel">
+  <div class="panel-header">
+    <div>
+      <p class="eyebrow">Ergebnis</p>
+      <h2>Net Salary Outlook</h2>
+      <p class="subtitle">Live Netto-Prognose with local fallback.</p>
+    </div>
+    <div class="header-actions">
+      <label class="toggle">
+        <span>Live API Mode</span>
+        <input type="checkbox" [checked]="store.liveMode()" (change)="store.toggleLiveMode($any($event.target).checked)" />
+      </label>
+      <button class="ghost" type="button" (click)="store.refreshTaxConfig()">Force refresh tax data</button>
+    </div>
+  </div>
+
+  <div class="status-row">
+    <span class="chip" [class.active]="store.results()?.source === 'local'">Using local tax data</span>
+    <span class="chip" [class.active]="store.liveMode()">Live mode active</span>
+    <span class="chip">Tax data last updated: {{ store.taxConfig()?.lastUpdated || 'Unknown' }}</span>
+    <span class="chip" *ngIf="store.loadingState().taxConfig === 'loading'">Refreshing tax data...</span>
+    <span class="chip error" *ngIf="store.lastError()">{{ store.lastError() }}</span>
+  </div>
+
+  <ng-container *ngIf="store.results() as results">
+    <div class="net-card">
+      <div>
+        <p class="eyebrow">Net Salary</p>
+        <div class="net-value">€ {{ getResult(results).net | number : '1.2-2' }}</div>
+        <p class="muted">Gross: € {{ getResult(results).gross | number : '1.2-2' }}</p>
+      </div>
+      <div class="period-toggle">
+        <button type="button" [class.active]="displayPeriod() === 'monthly'" (click)="setPeriod('monthly')">Monthly</button>
+        <button type="button" [class.active]="displayPeriod() === 'yearly'" (click)="setPeriod('yearly')">Yearly</button>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <p class="eyebrow">Tax Breakdown</p>
+        <p class="metric">€ {{ getResult(results).taxes.total | number : '1.2-2' }}</p>
+        <span class="muted">Income: € {{ getResult(results).taxes.incomeTax | number : '1.2-2' }}</span>
+        <span class="muted">Solidarity: € {{ getResult(results).taxes.solidarityTax | number : '1.2-2' }}</span>
+        <span class="muted">Church: € {{ getResult(results).taxes.churchTax | number : '1.2-2' }}</span>
+      </div>
+      <div class="metric-card">
+        <p class="eyebrow">Insurance Breakdown</p>
+        <p class="metric">€ {{ getResult(results).insurance.total | number : '1.2-2' }}</p>
+        <span class="muted">Health: € {{ getResult(results).insurance.health | number : '1.2-2' }}</span>
+        <span class="muted">Pension: € {{ getResult(results).insurance.pension | number : '1.2-2' }}</span>
+        <span class="muted">Unemployment: € {{ getResult(results).insurance.unemployment | number : '1.2-2' }}</span>
+      </div>
+      <div class="metric-card">
+        <p class="eyebrow">Effective Tax Rate</p>
+        <p class="metric">{{ getResult(results).effectiveTaxRate | number : '1.1-1' }}%</p>
+        <span class="muted">Source: {{ results.source === 'live' ? 'Live API' : 'Local engine' }}</span>
+      </div>
+    </div>
+
+    <div class="charts-panel">
+      @defer (when results) {
+        <app-tax-charts [results]="results" [period]="displayPeriod()"></app-tax-charts>
+      } @placeholder {
+        <div class="chart-placeholder">Loading charts...</div>
+      }
+    </div>
+
+    <div class="comparison" *ngIf="getComparison(results) as comparison">
+      <p class="eyebrow">Comparison with Previous Result</p>
+      <p class="metric">{{ comparison.direction === 'up' ? '+' : '-' }}€ {{ comparison.diff | number : '1.2-2' }}</p>
+      <span class="muted">Compared to last saved calculation in history.</span>
+    </div>
+
+    <div class="history">
+      <p class="eyebrow">Calculation History</p>
+      <div class="history-list" *ngIf="store.history().length; else noHistory">
+        <div class="history-item" *ngFor="let item of store.history()">
+          <div>
+            <strong>€ {{ item.results[displayPeriod()].net | number : '1.2-2' }}</strong>
+            <span class="muted">Gross € {{ item.results[displayPeriod()].gross | number : '1.2-2' }}</span>
+          </div>
+          <span class="muted">{{ item.timestamp | date : 'medium' }}</span>
+        </div>
+      </div>
+      <ng-template #noHistory>
+        <div class="history-empty">No saved calculations yet.</div>
+      </ng-template>
+    </div>
+  </ng-container>
+
+  <div class="empty" *ngIf="!store.results()">
+    <p>Waiting for tax data and input values.</p>
+  </div>
+</div>

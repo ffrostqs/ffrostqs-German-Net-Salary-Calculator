@@ -1,0 +1,237 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--surface-deep);
+  border: 1px solid var(--border-glow);
+  border-radius: 24px;
+  padding: 26px 28px 32px;
+  box-shadow: var(--shadow-strong);
+  backdrop-filter: blur(18px);
+}
+
+.panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  margin: 0 0 6px;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(8, 12, 32, 0.7);
+  border: 1px solid rgba(125, 183, 255, 0.2);
+  font-size: 12px;
+}
+
+.toggle input[type='checkbox'] {
+  appearance: none;
+  width: 42px;
+  height: 22px;
+  background: rgba(90, 98, 160, 0.3);
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.toggle input[type='checkbox']::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.toggle input[type='checkbox']:checked {
+  background: linear-gradient(120deg, rgba(82, 140, 255, 0.9), rgba(158, 97, 255, 0.8));
+}
+
+.toggle input[type='checkbox']:checked::after {
+  transform: translateX(18px);
+  background: #f5f7ff;
+}
+
+button.ghost {
+  background: transparent;
+  border: 1px solid rgba(125, 183, 255, 0.35);
+  color: var(--text-primary);
+  padding: 8px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 6px 10px;
+  background: rgba(8, 12, 32, 0.6);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--text-muted);
+  border: 1px solid rgba(125, 183, 255, 0.2);
+}
+
+.chip.active {
+  color: #f4f7ff;
+  border-color: rgba(140, 188, 255, 0.6);
+  box-shadow: 0 0 12px rgba(104, 147, 255, 0.3);
+}
+
+.chip.error {
+  color: #ffb4b4;
+  border-color: rgba(255, 120, 120, 0.5);
+}
+
+.net-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(16, 22, 52, 0.9), rgba(21, 13, 40, 0.9));
+  border-radius: 20px;
+  border: 1px solid rgba(140, 188, 255, 0.35);
+}
+
+.net-value {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.period-toggle {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.period-toggle button {
+  background: rgba(10, 14, 36, 0.6);
+  border: 1px solid rgba(125, 183, 255, 0.2);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.period-toggle button.active {
+  background: linear-gradient(120deg, rgba(83, 140, 255, 0.8), rgba(158, 97, 255, 0.8));
+  border-color: rgba(148, 198, 255, 0.7);
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  background: rgba(8, 12, 32, 0.6);
+  border: 1px solid rgba(125, 183, 255, 0.2);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.charts-panel {
+  background: rgba(8, 12, 32, 0.6);
+  border: 1px solid rgba(125, 183, 255, 0.2);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.chart-placeholder {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.comparison {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(125, 183, 255, 0.2);
+  background: rgba(12, 15, 38, 0.7);
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(10, 14, 36, 0.6);
+  border: 1px solid rgba(125, 183, 255, 0.15);
+}
+
+.history-item strong {
+  display: block;
+  font-size: 14px;
+}
+
+.history-empty,
+.empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted);
+}

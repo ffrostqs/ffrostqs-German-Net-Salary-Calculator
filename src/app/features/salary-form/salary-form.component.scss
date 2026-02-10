@@ -1,0 +1,114 @@
+.calc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--surface-glass);
+  border: 1px solid var(--border-glow);
+  border-radius: 18px;
+  padding: 22px 20px 26px;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px);
+}
+
+.form-header h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: var(--text-primary);
+}
+
+.form-header p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.divider {
+  border-bottom: 1px dashed rgba(140, 188, 255, 0.25);
+  margin: 8px 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 12px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.form-row label {
+  line-height: 1.4;
+}
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  background: rgba(6, 10, 26, 0.8);
+  border: 1px solid rgba(94, 132, 255, 0.2);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 8px 28px 8px 10px;
+  font-size: 13px;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: rgba(125, 183, 255, 0.6);
+  box-shadow: 0 0 0 2px rgba(79, 132, 255, 0.2);
+}
+
+.suffix {
+  position: absolute;
+  right: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.radio-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.radio input[type='radio'] {
+  accent-color: #ff8a3d;
+}
+
+.submit {
+  align-self: center;
+  margin-top: 10px;
+  padding: 8px 28px;
+  border-radius: 6px;
+  background: #f2f2f2;
+  color: #121212;
+  border: 1px solid #2c2c2c;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.submit:hover {
+  background: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

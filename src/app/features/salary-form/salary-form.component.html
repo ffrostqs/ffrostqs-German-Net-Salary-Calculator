@@ -1,0 +1,151 @@
+<form class="calc-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-header">
+    <h3>Nettoeinkommen berechnen!</h3>
+    <p>So sehen Ihre monatlichen Nettoergebnisse aus.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="form-row">
+    <label>Ihr Bruttoeinkommen</label>
+    <div class="field">
+      <input type="number" min="0" formControlName="gross" />
+      <span class="suffix">€</span>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Abrechnungszeitraum</label>
+    <div class="radio-group">
+      <label class="radio">
+        <input type="radio" formControlName="period" value="yearly" />
+        Jahr
+      </label>
+      <label class="radio">
+        <input type="radio" formControlName="period" value="monthly" />
+        Monat
+      </label>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Geldwerter Vorteil (monatlicher Wert)</label>
+    <div class="field">
+      <input type="number" min="0" formControlName="benefits" />
+      <span class="suffix">€</span>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Abrechnungsjahr</label>
+    <div class="field">
+      <input type="number" min="2000" formControlName="year" />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Jährl. Steuerfreibetrag</label>
+    <div class="field">
+      <input type="number" min="0" formControlName="taxAllowance" />
+      <span class="suffix">€</span>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Steuerklasse</label>
+    <div class="field">
+      <select formControlName="taxClass">
+        <option *ngFor="let cls of [1,2,3,4,5,6]" [value]="cls">Klasse {{ cls }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>In der Kirche</label>
+    <div class="radio-group">
+      <label class="radio">
+        <input type="radio" formControlName="churchTax" value="true" />
+        ja
+      </label>
+      <label class="radio">
+        <input type="radio" formControlName="churchTax" value="false" />
+        nein
+      </label>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Ihr Bundesland</label>
+    <div class="field">
+      <select formControlName="state">
+        <option *ngFor="let state of states" [value]="state.code">{{ state.name }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Ihr Alter</label>
+    <div class="field">
+      <input type="number" min="16" formControlName="age" />
+      <span class="suffix">J</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="form-row">
+    <label>Haben Sie Kinder</label>
+    <div class="radio-group">
+      <label class="radio">
+        <input type="radio" formControlName="children" value="true" />
+        ja
+      </label>
+      <label class="radio">
+        <input type="radio" formControlName="children" value="false" />
+        nein
+      </label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="form-row">
+    <label>Krankenversicherung</label>
+    <div class="field">
+      <select formControlName="healthInsuranceType">
+        <option value="public">gesetzlich versichert</option>
+        <option value="private">privat versichert</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>KV-Zusatzbeitrag</label>
+    <div class="field">
+      <input type="number" step="0.1" min="0" formControlName="healthAdditionalRate" />
+      <span class="suffix">%</span>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Rentenversicherung</label>
+    <div class="field">
+      <select formControlName="pensionInsurance">
+        <option value="true">gesetzlich versichert</option>
+        <option value="false">nicht versichert</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label>Arbeitslosenversicherung</label>
+    <div class="field">
+      <select formControlName="unemploymentInsurance">
+        <option value="true">gesetzlich versichert</option>
+        <option value="false">nicht versichert</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="submit" type="submit">berechnen</button>
+</form>

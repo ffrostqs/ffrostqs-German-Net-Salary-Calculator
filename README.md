@@ -1,59 +1,130 @@
-# SalaryCalculator
+# German Net Salary Calculator (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+A static, offline-first German net salary calculator built with Angular 17+ (Angular 19 here), Signals, RxJS, and Chart.js. The app loads tax parameters from `src/assets/data/tax-config.json`, performs calculations in the browser, and supports an optional Live API mode. A GitHub Action updates tax parameters weekly.
 
-## Development server
+## Highlights
 
-To start a local development server, run:
+- Static site, GitHub Pages ready
+- Offline after first load (tax config cached in `localStorage`)
+- Weekly tax data refresh via GitHub Actions
+- Live API mode toggle with local fallback
+- Signals-based state + reactive form input
+- Chart.js breakdown visualization
 
-```bash
-ng serve
+## Architecture
+
+```
+/src/app
+  /core
+    /services
+    /models
+    /utils/calc
+  /features
+    /salary-form
+    /results-panel
+    /charts
+  /shared
+  /store
+    /signals-store
+  /assets/data
+    tax-config.json
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Calculation Engine
 
-## Code scaffolding
+Pure functions in `src/app/core/utils/calc`:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- `calculate-net-salary.ts`
+- `calculate-taxes.ts`
+- `calculate-insurance.ts`
 
-```bash
-ng generate component component-name
+The engine is configuration-driven. Replace the placeholder bracket logic with an official algorithm if you need exact, legally binding calculations.
+
+## Local Tax Data
+
+The runtime loads tax data from:
+
+`src/assets/data/tax-config.json`
+
+Example format:
+
+```json
+{
+  "year": 2026,
+  "taxClasses": {},
+  "limits": {},
+  "insuranceRates": {},
+  "allowances": {},
+  "lastUpdated": ""
+}
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The data is cached in `localStorage` for offline usage. Use the “Force refresh tax data” button to reload the local file.
 
-```bash
-ng generate --help
+## Live API Mode (Optional)
+
+Enable Live API Mode to call an external API for results. Update the endpoint in:
+
+`src/app/core/utils/runtime-config.ts`
+
+```ts
+export const LIVE_API_CONFIG = {
+  url: '',
+  apiKey: ''
+};
 ```
 
-## Building
+When Live mode fails, the UI shows an error and falls back to the local calculation engine.
 
-To build the project run:
+## Weekly Tax Data Update (GitHub Actions)
 
-```bash
-ng build
-```
+Workflow file:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+`.github/workflows/update-tax-data.yml`
 
-## Running unit tests
+Required secrets:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- `TAX_API_URL` – external endpoint for tax parameters
+- `TAX_API_TOKEN` – optional bearer token
 
-```bash
-ng test
-```
+The workflow downloads the new JSON, compares a hash with the current file, and only commits if the data changed.
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+## Development
 
 ```bash
-ng e2e
+npm install
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Build
 
-## Additional Resources
+```bash
+npm run build
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## GitHub Pages Deployment
+
+1. Set your repository name (for base-href):
+
+```bash
+npm run build:gh
+```
+
+2. Deploy `dist/angular-calc` to the `gh-pages` branch.
+
+Example (manual):
+
+```bash
+git checkout --orphan gh-pages
+cp -R dist/angular-calc/* .
+git add .
+git commit -m "Deploy"
+git push origin gh-pages --force
+```
+
+Then enable GitHub Pages on the `gh-pages` branch in repository settings.
+
+## Notes
+
+- This project is static-only. No backend server is required.
+- External API usage is limited to the optional Live Mode and the scheduled GitHub Action.
